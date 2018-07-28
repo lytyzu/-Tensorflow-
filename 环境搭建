@@ -1,0 +1,101 @@
+Win7 64位 + VM VirtualBox + Ubuntu 16.04 + Python 2.7 + Tensorflow 1.9
+
+【目录】
+1. 安装虚拟机Oracle VM VirtualBox
+2. 下载Ubutnu 16.04镜像文件
+3. 在virtualbox中安装ubuntu 16.04
+4. 设置Win7与Ubuntu共享文件夹
+5. 安装Python 2.7.12
+6. 安装Tensorflow 1.9.0
+7. 测试环境
+
+----
+
+1. 安装虚拟机Oracle VM VirtualBox
+从Virtualbox官网下载安装文件，官网链接：
+链接：https://download.virtualbox.org/virtualbox/5.2.16/VirtualBox-5.2.16-123759-Win.exe
+安装方式比较简单，典型的Windows程序安装过程，一路回车就好了。
+
+2. 下载Ubutnu 16.04镜像文件
+从官网直接下载，选择64位桌面版：ubuntu 16.04.4 lts desktop 64bit。 
+除非电脑很老才需要32位，如果是这样的话，建议升级电脑。
+链接：链接：http://releases.ubuntu.com/xenial/ubuntu-16.04.4-desktop-amd64.iso
+
+3. 在virtualbox中安装ubuntu 16.04
+
+3.1 win7启动Virtual box程序
+
+3.2 在Virtualbox中“新建”虚拟电脑，一些选项配置如下：
+
+- 名称：ubunt1604，类型：Linux，版本：Ubuntu（64-bit）
+- 内存大小：2048MB （不建议超过主机物理内存的一半）
+- 现在创建虚拟硬盘
+- 格式：VDI（VirtualBox磁盘镜像）
+- 大小：动态分配，大小建议20GB以上
+- 选择文件位置：注意有足够的磁盘空间。
+- 创建
+
+3.3 在Virtualbox选“设置”
+
+- 存储/控制器
+- 选择一个虚拟光盘文件
+- 添加ubuntu-16.04.4-desktop-amd64.iso
+
+3.4 “启动”
+
+- 开始安装，
+- 默认分区
+- 用户名foo 密码123456
+- 在进行到“下载语言包”的步骤会非常慢，可以选择“跳过”后面再更新。
+- 设置/存储/控制器IDE：去除虚拟光盘文件镜像
+- 重启，登陆
+3.5 配置ubuntu
+- [给ubuntu16.04添加aliyun更新源]
+链接：给Ubuntu 16.04更换更新源 - CSDN博客
+- 安装vim/gvim `sudo apt install vim`
+
+
+4. 设置Win7与Ubuntu共享文件夹
+
+- VirtualBox中启动Ubuntu
+- 在VirtualBox菜单“设备”中选择“安装增强功能”。可能遇到以下错误：
+“VirtualBox Ubuntu Guest Additions not installing : modprobe vboxsf failed”
+
+解决方法
+sudo apt-get install virtualbox-guest-dkms
+
+参考链接
+链接：VirtualBox Ubuntu Guest Additions not installing :...
+    
+- 安装成功后再“设置”，共享文件夹;固定分配;自动挂载
+
+5. 安装Python 2.7.12
+
+- Ubuntu 16.04自带Python 2.7.12
+
+
+6. 安装Tensorflow 1.9.0
+
+- 参考网址链接：https://www.tensorflow.org/install/install_linux
+- 建议使用 Virtualenv 进行安装
+
+6.1 安装 pip 和 Virtualenv：
+sudo apt-get install python-pip python-dev python-virtualenv 
+
+6.2 创建 Virtualenv 环境：
+virtualenv --system-site-packages
+
+6.3 激活 Virtualenv 环境：
+source ~/tensorflow/bin/activate
+
+7. 测试环境
+
+7.1 vim test.py
+7.2 编写代码
+
+import tensorflow as tf
+print tf.__version__
+
+7.3 运行代码
+python test.py
+输出结果：1.9.0
